@@ -1,9 +1,6 @@
 # GPG Cheat Sheet
 
-I was looking for GPG cheatsheet and found [this](http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/) page. 
-
-I just convert that page to markdown version.
-
+I was looking for GPG cheatsheet and found [this](http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/) page. I just converted to markdown version.
 
 ## Create a key:
 ```
@@ -11,26 +8,18 @@ gpg --gen-key
 ```
 generally you can select the defaults.
 
-## Export a public key into file public.key:
+## Export a public key:
 ```
 gpg --export -a USERNAME > public.key
 ```
-This will create a file called public.key with the ascii representation of the public key for User Name. This is a variation on:
-```
-gpg --export
-```
-which by itself is basically going to print out a bunch of crap to your screen. I recommend against doing this.
-```
-gpg --export -a USERNAME
-```
-prints out the public key for User Name to the command line, which is only semi-useful
+This will create a file called public.key with the ascii representation of the public key for USERNAME.
 
 ## Export a private key:
-This will create a file called private.key with the ascii representation of the private key for User Name.
+This will create a file called private.key with the ascii representation of the private key for USERNAME.
 ```
 gpg --export-secret-key -a USERNAME > private.key
 ```
-It's pretty much like exporting a public key, but you have to override some default protections. There's a note [*](#Use-Case-1) at the bottom explaining why you may want to do this.
+It's pretty much like exporting a public key, but you have to override some default protections. There's a note [at the bottom](#Use-Case-1) explaining why you may want to do this.
 
 ## Import a public key:
 This adds the public key in the file "public.key" to your public key ring.
@@ -43,22 +32,22 @@ gpg --import public.key
 ```
 gpg --allow-secret-key-import --import private.key
 ```
-This adds the private key in the file "private.key" to your private key ring. There's a note (*) at the bottom explaining why you may want to do this.
+This adds the private key in the file "private.key" to your private key ring. There's a note [at the bottom](#Use-Case-2) explaining why you may want to do this.
 
-## delete a public key (from your public key ring):
+## Delete a public key:
 This removes the public key from your public key ring.
 ```
 gpg --delete-key USERNAME
 ```
 **NOTE!** If there is a private key on your private key ring associated with this public key, you will get an error! You must delete your private key for this key pair from your private key ring first.
 
-## Delete an private key (a key on your private key ring):
+## Delete an private key:
 This deletes the secret key from your secret key ring.
 ```
 gpg --delete-secret-key USERNAME
 ```
 
-## To list the keys in your public key ring:
+## List the keys in your public key ring:
 ```
 gpg --list-keys
 ```
@@ -76,7 +65,7 @@ gpg --fingerprint > fingerprint
 
 ## To encrypt data, use:
 ```
-gpg -e -u "Sender User Name" -r "Receiver User Name" somefile
+gpg -e -u "Sender USERNAME" -r "Receiver USERNAME" somefile
 ```
 There are some useful options here, such as -u to specify the secret key to be used, and -r to specify the public key of the recipient.
 As an example: 
@@ -110,6 +99,7 @@ gpg --gen-revoke
 
  * **--gen-revoke** creates a revocation certificate, which when distributed to people and keyservers tells them that your key is no longer valid, see http://www.gnupg.org/gph/en/manual/r721.html
  * **--edit-key** allows you do do an assortment of key tasks, see http://www.gnupg.org/gph/en/manual/r899.html
+
 
 
 ## Sharing Secret Keys
